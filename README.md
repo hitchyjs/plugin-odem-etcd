@@ -31,7 +31,7 @@ Select an instance of this backend as default adapter in your application's conf
 module.exports = function() {
     return {
         database: {
-            default : new EtcdAdapter( {
+            default : new this.runtime.services.EtcdAdapter( {
                 hosts: [
                     "https://10.0.1.1:2379",
                     "https://10.0.1.2:2379",
