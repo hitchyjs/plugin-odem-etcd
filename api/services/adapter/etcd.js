@@ -107,7 +107,15 @@ module.exports = function() {
 							logDebug( "connected with cluster" );
 						} )
 						.on( "put", res => {
-							this.$emit( "change", res.key, res.value );
+							let value;
+
+							try {
+								value = JSON.parse( res.value );
+							} catch ( error ) {
+								logError( "got change notification with invalid data: %s", error.message );
+							}
+
+							this.$emit( "change", res.key, value );
 						} )
 						.on( "delete", res => {
 							this.$emit( "delete", res.key );
