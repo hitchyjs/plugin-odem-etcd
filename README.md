@@ -48,4 +48,4 @@ module.exports = function() {
 };
 ```
 
-Provided [options](https://mixer.github.io/etcd3/interfaces/options_.ioptions.html) are basically forwarded to [instance of Etcd3 created internally)(https://mixer.github.io/etcd3/classes/namespace_.namespace.html).
+Provided [options](https://mixer.github.io/etcd3/interfaces/options_.ioptions.html) are basically forwarded to [instance of Etcd3 created internally](https://mixer.github.io/etcd3/classes/namespace_.namespace.html).
