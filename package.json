@@ -1,0 +1,41 @@
+{
+	"name": "hitchy-plugin-odem-etcd",
+	"version": "0.1.0",
+	"description": "connecting Hitchy's ODM with etcd cluster",
+	"main": "index.js",
+	"scripts": {
+		"style": "eslint .",
+		"test": "mocha --ui=tdd test/**/*.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hitchyjs/plugin-odem-rest.git"
+	},
+	"keywords": [
+		"hitchy",
+		"ODM",
+		"etcd"
+	],
+	"author": "Thomas Urban",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/hitchyjs/plugin-odem-etcd/issues"
+	},
+	"homepage": "https://github.com/hitchyjs/plugin-odem-etcd#readme",
+	"dependencies": {
+		"etcd3": "^0.2.13"
+	},
+	"peerDependencies": {
+		"hitchy-plugin-odem": "^0.4.5",
+		"hitchy": "^0.4.3"
+	},
+	"devDependencies": {
+		"eslint": "^6.5.1",
+		"eslint-config-cepharum": "^1.0.10",
+		"eslint-plugin-promise": "^4.2.1",
+		"hitchy-server-dev-tools": "^0.1.4",
+		"mocha": "^6.2.1",
+		"should": "^13.2.3",
+		"should-http": "^0.1.1"
+	}
+}
