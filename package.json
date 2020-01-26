@@ -23,10 +23,10 @@
 	},
 	"homepage": "https://github.com/hitchyjs/plugin-odem-etcd#readme",
 	"dependencies": {
+		"hitchy-plugin-odem": "^0.4.5",
 		"etcd3": "^0.2.13"
 	},
 	"peerDependencies": {
-		"hitchy-plugin-odem": "^0.4.5",
 		"hitchy": "^0.4.3"
 	},
 	"devDependencies": {
