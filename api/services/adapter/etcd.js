@@ -109,6 +109,8 @@ module.exports = function() {
 						.on( "put", res => {
 							let value;
 
+							// TODO fetch previous revision of changed record from etcd to provide oldValue below
+
 							try {
 								value = JSON.parse( res.value );
 							} catch ( error ) {
