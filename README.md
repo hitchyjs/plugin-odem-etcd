@@ -25,5 +25,27 @@ It is installing this plugin and its dependency [hitchy-plugin-odem](https://www
 
 ## Usage
 
-Select an instance of this backend as default adapter in your application's configuration like so:
+Select an instance of this backend as default adapter in your application's configuration by creating a file **config/database.js** with content similar to this:
 
+```javascript
+module.exports = function() {
+    return {
+        database: {
+            default : new EtcdAdapter( {
+                hosts: [
+                    "https://10.0.1.1:2379",
+                    "https://10.0.1.2:2379",
+                    "https://10.0.1.3:2379",
+                ],
+                credentials: {
+                    rootCertificate: Buffer.from( "..." ),
+                    certChain: Buffer.from( "..." ),
+                    privateKey: Buffer.from( "..." ),
+                }
+            } ),
+        },
+    };
+};
+```
+
+Provided [options](https://mixer.github.io/etcd3/interfaces/options_.ioptions.html) are basically forwarded to [instance of Etcd3 created internally)(https://mixer.github.io/etcd3/classes/namespace_.namespace.html).
