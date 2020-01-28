@@ -33,7 +33,7 @@ const Path = require( "path" );
 
 
 const { Etcd3 } = require( "etcd3" );
-const { AbstractAdapter, UUID } = require( "hitchy-plugin-odem" );
+const { Adapter, UUID } = require( "hitchy-plugin-odem" );
 
 
 /**
@@ -60,7 +60,7 @@ module.exports = function() {
 	/**
 	 * Implements adapter for saving odem models in an etcd cluster.
 	 */
-	class EtcdAdapter extends AbstractAdapter {
+	class EtcdAdapter extends Adapter {
 		/**
 		 * @param {EtcdAdapterOptions} options options selecting cluster to use
 		 */
