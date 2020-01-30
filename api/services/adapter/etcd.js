@@ -29,11 +29,8 @@
 "use strict";
 
 const { PassThrough } = require( "stream" );
-const Path = require( "path" );
-
 
 const { Etcd3 } = require( "etcd3" );
-const { Adapter, UUID } = require( "hitchy-plugin-odem" );
 
 
 /**
@@ -53,6 +50,7 @@ const DefaultOptions = {
 
 module.exports = function() {
 	const api = this;
+	const { services: Services } = api.runtime;
 
 	const logDebug = api.log( "hitchy:odem:etcd:debug" );
 	const logError = api.log( "hitchy:odem:etcd:error" );
@@ -60,7 +58,7 @@ module.exports = function() {
 	/**
 	 * Implements adapter for saving odem models in an etcd cluster.
 	 */
-	class EtcdAdapter extends Adapter {
+	class EtcdAdapter extends Services.OdemAdapter {
 		/**
 		 * @param {EtcdAdapterOptions} options options selecting cluster to use
 		 */
@@ -166,9 +164,9 @@ module.exports = function() {
 						if ( current >= stopAt ) {
 							reject( new Error( "could not find available UUID after reasonable number of attempts" ) );
 						} else {
-							UUID.create()
+							Services.OdemUtilityUuid.create()
 								.then( uuid => {
-									const key = keyTemplate.replace( /%u/g, UUID.format( uuid ) );
+									const key = keyTemplate.replace( /%u/g, Services.OdemUtilityUuid.format( uuid ) );
 
 									return this.client.get( key )
 										.then( value => {
