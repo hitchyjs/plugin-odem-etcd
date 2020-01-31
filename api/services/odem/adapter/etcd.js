@@ -310,19 +310,17 @@ module.exports = function() {
 
 			ns.getAll().keys()
 				.then( keys => {
-					const prefixLength = _prefix.length > 0 ? _prefix.length + 1 : 0;
 					const numKeys = keys.length;
 					const children = new Map();
 
 					for ( let read = 0; read < numKeys; read++ ) {
 						let key = keys[read];
-						if ( prefixLength > 0 ) {
-							key = key.substr( 0, prefixLength );
-						}
 
 						if ( maxDepth < Infinity ) {
 							key = key.split( separator ).slice( 0, maxDepth ).join( separator );
 						}
+
+						children.set( _prefix + "/" + key, true );
 					}
 
 					_write( 0, Array.from( children.keys() ) );
