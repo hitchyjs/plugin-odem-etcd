@@ -324,66 +324,6 @@ module.exports = function() {
 		}
 
 		/**
-		 * Retrieves stream of available values.
-		 *
-		 * @param {string} prefix stream keys with given prefix, only
-		 * @param {int} maxDepth skip keys beyond this depth (relative to `prefix`)
-		 * @param {?string} separator consider this character separating segments of key selecting different depth, omit to disable depth processing
-		 * @returns {Readable} stream of values
-		 * @abstract
-		 */
-		valueStream( { prefix = "", maxDepth = Infinity, separator = null } = {} ) {
-			const stream = new PassThrough( { objectMode: true } );
-
-			const _prefix = prefix == null || prefix === "" ? "" : String( prefix ).trim().replace( /\/+$/, "" );
-			const ns = _prefix === "" ? this.client : this.client.namespace( _prefix + "/" );
-
-			ns.getAll().keys()
-				.then( keys => {
-					const prefixLength = _prefix.length > 0 ? _prefix.length + 1 : 0;
-					const numKeys = keys.length;
-					const children = new Map();
-
-					for ( let read = 0; read < numKeys; read++ ) {
-						let key = keys[read];
-						if ( prefixLength > 0 ) {
-							key = key.substr( 0, prefixLength );
-						}
-
-						if ( maxDepth < Infinity ) {
-							key = key.split( separator ).slice( 0, maxDepth ).join( separator );
-						}
-					}
-
-					_write( 0, Array.from( children.keys() ) );
-
-					/**
-					 * Pushes items into writable stream pausing whenever
-					 * hitting the stream's highWaterMark.
-					 *
-					 * @param {int} cursor index of next item to write
-					 * @param {Array} items set of items to be written
-					 * @returns {void}
-					 */
-					function _write( cursor, items ) {
-						const numItems = items.length;
-
-						for ( let i = cursor; i < numItems; i++ ) {
-							if ( !stream.write( items[i] ) ) {
-								stream.once( "drain", () => _write( i + 1, items ) );
-								return;
-							}
-						}
-
-						stream.end();
-					}
-				} )
-				.catch( error => stream.destroy( error ) );
-
-			return stream;
-		}
-
-		/**
 		 * Maps some key to relative pathname to use on addressing related record in
 		 * backend.
 		 *
