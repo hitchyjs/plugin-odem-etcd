@@ -66,9 +66,11 @@ module.exports = function() {
 			super();
 
 			const _options = Object.assign( {}, DefaultOptions, options );
+			const prefix = _options.prefix = _options.prefix == null ? "" : String( _options.prefix ).trim().replace( /\/+$/, "" ) + "/";
+
+			logDebug( "connecting with etcd cluster at %j with prefix %s", _options.hosts || ["http:127.0.0.1:2379"], prefix )
 
 			const client = new Etcd3( _options );
-			const prefix = _options.prefix == null ? "" : String( _options.prefix ).trim().replace( /\/+$/, "" ) + "/";
 
 			Object.defineProperties( this, {
 				/**
@@ -173,6 +175,8 @@ module.exports = function() {
 									return that.client.get( key )
 										.then( value => {
 											if ( value == null ) {
+												logDebug( "creating entry at %s containing %j", key, data );
+
 												return that.client.put( key )
 													.value( JSON.stringify( data ) )
 													.then( () => resolve( key ) );
@@ -216,6 +220,8 @@ module.exports = function() {
 		 * @abstract
 		 */
 		read( key, { ifMissing = null } = {} ) {
+			logDebug( "fetching entry at %s", key );
+
 			return this.client.get( key )
 				.then( value => {
 					return value == null ? ifMissing : JSON.parse( value );
@@ -235,6 +241,8 @@ module.exports = function() {
 		 * @abstract
 		 */
 		write( key, data ) {
+			logDebug( "updating entry at %s with %j", key, data );
+
 			return this.client.put( key ).value( JSON.stringify( data ) ).then( () => data );
 		}
 
@@ -248,6 +256,8 @@ module.exports = function() {
 		 * @abstract
 		 */
 		remove( key ) {
+			logDebug( "removing entry at %s", key );
+
 			return this.client.delete( key ).then( () => key );
 		}
 
@@ -265,6 +275,8 @@ module.exports = function() {
 
 			const _prefix = prefix == null || prefix === "" ? "" : String( prefix ).trim().replace( /\/+$/, "" );
 			const ns = _prefix === "" ? this.client : this.client.namespace( _prefix + "/" );
+
+			logDebug( "streaming keys from %s", _prefix === "" ? _prefix : "<root>" );
 
 			ns.getAll().keys()
 				.then( keys => {
