@@ -58,7 +58,7 @@ module.exports = function() {
 	/**
 	 * Implements adapter for saving odem models in an etcd cluster.
 	 */
-	class EtcdAdapter extends Services.OdemAdapter {
+	class OdemEtcdAdapter extends Services.OdemAdapter {
 		/**
 		 * @param {EtcdAdapterOptions} options options selecting cluster to use
 		 */
@@ -74,7 +74,7 @@ module.exports = function() {
 				/**
 				 * Exposes client connecting with etcd cluster.
 				 *
-				 * @name EtcdAdapter#client
+				 * @name OdemEtcdAdapter#client
 				 * @property {Etcd3}
 				 * @readonly
 				 */
@@ -84,7 +84,7 @@ module.exports = function() {
 				 * Exposes prefix to use for mapping internal keys into those
 				 * used in connected etcd cluster.
 				 *
-				 * @name EtcdAdapter#prefix
+				 * @name OdemEtcdAdapter#prefix
 				 * @property {string}
 				 * @readonly
 				 */
@@ -148,6 +148,8 @@ module.exports = function() {
 		 * @abstract
 		 */
 		create( keyTemplate, data ) {
+			const that = this;
+
 			return this.client.lock( keyTemplate )
 				.do( () => new Promise( ( resolve, reject ) => {
 					attempt( 0, 100 );
@@ -168,12 +170,12 @@ module.exports = function() {
 								.then( uuid => {
 									const key = keyTemplate.replace( /%u/g, Services.OdemUtilityUuid.format( uuid ) );
 
-									return this.client.get( key )
+									return that.client.get( key )
 										.then( value => {
 											if ( value == null ) {
-												return this.client.put( key )
+												return that.client.put( key )
 													.value( JSON.stringify( data ) )
-													.then( resolve );
+													.then( () => resolve( key ) );
 											}
 
 											process.nextTick( attempt, current + 1, stopAt );
@@ -436,5 +438,5 @@ module.exports = function() {
 		static get supportsBinary() { return false; }
 	}
 
-	return EtcdAdapter;
+	return OdemEtcdAdapter;
 };
