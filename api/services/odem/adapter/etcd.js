@@ -91,6 +91,36 @@ module.exports = function() {
 				 * @readonly
 				 */
 				prefix: { value: prefix },
+
+				/**
+				 * Exposes options eventually used for customizing adapter.
+				 *
+				 * @name OdemEtcdAdapter#options
+				 * @property {object}
+				 * @readonly
+				 */
+				options: {
+					get: () => {
+						const copy = {};
+						const names = Object.keys( _options );
+						const numNames = names.length;
+
+						for ( let i = 0; i < numNames; i++ ) {
+							const name = names[i];
+
+							if ( name === "credentials" ) {
+								copy[name] = "provided, but hidden";
+							} else {
+								copy[name] = _options[name];
+							}
+						}
+
+						Object.defineProperty( this, "options", { value: copy } );
+
+						return copy;
+					},
+					configurable: true,
+				},
 			} );
 
 			this.client.watch()
