@@ -1,3 +1,4 @@
 {
-	"role": "odm-etcd-adapter"
+	"role": "odm-adapter-etcd",
+	"appendFolders": false
 }
