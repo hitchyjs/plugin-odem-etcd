@@ -68,7 +68,6 @@ module.exports = function() {
 			const _options = Object.assign( {}, DefaultOptions, options );
 			const prefix = _options.prefix = _options.prefix == null ? "" : String( _options.prefix ).trim().replace( /\/+$/, "" ) + "/";
 
-			logDebug( "connecting with etcd cluster at %j with prefix %s", _options.hosts || ["http:127.0.0.1:2379"], prefix )
 
 			const client = new Etcd3( _options );
 
@@ -310,9 +309,12 @@ module.exports = function() {
 
 			ns.getAll().keys()
 				.then( keys => {
+					logDebug( "got %d raw etcd-side key(s)%s", keys.length );
+
 					const numKeys = keys.length;
 					const children = new Map();
 
+					// extract list of unique UUIDs
 					for ( let read = 0; read < numKeys; read++ ) {
 						let key = keys[read];
 
@@ -322,6 +324,8 @@ module.exports = function() {
 
 						children.set( _prefix + "/" + key, true );
 					}
+
+					logDebug( "got %d unique odem-side key(s)", children.size );
 
 					_write( 0, Array.from( children.keys() ) );
 
