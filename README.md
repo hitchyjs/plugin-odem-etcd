@@ -28,6 +28,8 @@ It is installing this plugin and its dependency [hitchy-plugin-odem](https://www
 Select an instance of this backend as default adapter in your application's configuration by creating a file **config/database.js** with content similar to this:
 
 ```javascript
+const File = require( "fs" );
+
 module.exports = function() {
     return {
         database: {
@@ -38,9 +40,9 @@ module.exports = function() {
                     "https://10.0.1.3:2379",
                 ],
                 credentials: {
-                    rootCertificate: Buffer.from( "..." ),
-                    certChain: Buffer.from( "..." ),
-                    privateKey: Buffer.from( "..." ),
+                    rootCertificate: File.readFileSync( "path/to/ca.pem" ),
+                    certChain: File.readFileSync( "path/to/cert.pem" ),
+                    privateKey: File.readFileSync( "path/to/key.pem" ),
                 }
             } ),
         },
