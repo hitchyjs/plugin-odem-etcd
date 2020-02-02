@@ -428,14 +428,6 @@ module.exports = function() {
 		 * @returns {boolean} true if adapter can save binary buffers as property value
 		 */
 		static get supportsBinary() { return false; }
-
-		/**
-		 * Indicates if connected backend is capable of adjusting stored data
-		 * and thus must be observed by local instance of Hitchy's ODM.
-		 *
-		 * @returns {boolean} true if connected backend may change data autonomously
-		 */
-		static get dataMayChange() { return true; }
 	}
 
 	return OdemEtcdAdapter;
