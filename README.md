@@ -33,7 +33,7 @@ const File = require( "fs" );
 module.exports = function() {
     return {
         database: {
-            default : new this.runtime.services.EtcdAdapter( {
+            default : new this.runtime.services.OdemAdapterEtcd( {
                 hosts: [
                     "https://10.0.1.1:2379",
                     "https://10.0.1.2:2379",
