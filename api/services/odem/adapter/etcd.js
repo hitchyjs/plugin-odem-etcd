@@ -154,10 +154,18 @@ module.exports = function() {
 								logError( "got change notification with invalid data: %s", error.message );
 							}
 
-							this.emit( "change", res.key.toString( "utf8" ), value );
+							const key = res.key.toString( "utf8" );
+
+							logDebug( "got remote change notification on %s", key );
+
+							this.emit( "change", key, value );
 						} )
 						.on( "delete", res => {
-							this.emit( "delete", res.key.toString( "utf8" ) );
+							const key = res.key.toString( "utf8" );
+
+							logDebug( "got remote removal notification on %s", key );
+
+							this.emit( "delete", key );
 						} );
 				} )
 				.catch( error => {
