@@ -120,11 +120,6 @@ module.exports = function() {
 					},
 					configurable: true,
 				},
-
-				// prevent this adapter from being sealed/frozen so event
-				// listeners can be added
-				$$doNotSeal$$: { value: true },
-				$$doNotFreeze$$: { value: true },
 			} );
 
 			this.client.watch()
