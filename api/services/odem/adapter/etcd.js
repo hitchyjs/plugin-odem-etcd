@@ -246,7 +246,7 @@ module.exports = function() {
 		 * @abstract
 		 */
 		has( key ) {
-			return this.client().get( key )
+			return this.client.get( key )
 				.then( () => true )
 				.catch( error => {
 					// FIXME distinguish fatal errors from desired ones due to missing selected key
