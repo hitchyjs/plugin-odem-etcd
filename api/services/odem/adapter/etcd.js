@@ -325,7 +325,7 @@ module.exports = function() {
 
 			ns.getAll().keys()
 				.then( keys => {
-					logDebug( "got %d raw etcd-side key(s)%s", keys.length );
+					logDebug( "got %d raw etcd-side key(s)", keys.length );
 
 					const numKeys = keys.length;
 					const children = new Map();
