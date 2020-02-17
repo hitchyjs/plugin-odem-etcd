@@ -298,7 +298,7 @@ module.exports = function() {
 		remove( key ) {
 			logDebug( "removing entry at %s", key );
 
-			return this.client.delete( key ).then( () => key );
+			return this.client.delete().key( key ).then( () => key );
 		}
 
 		/**
