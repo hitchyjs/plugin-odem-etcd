@@ -45,6 +45,7 @@ const { Etcd3 } = require( "etcd3" );
 
 const DefaultOptions = {
 	prefix: "hitchy-odem",
+	retry: true,
 };
 
 
