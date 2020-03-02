@@ -243,12 +243,11 @@ module.exports = function() {
 		 */
 		has( key ) {
 			return this.client.get( key )
-				.then( () => true )
+				.then( record => Boolean( record ) )
 				.catch( error => {
-					// FIXME distinguish fatal errors from desired ones due to missing selected key
-					logDebug( "testing key %s caused error: %s", key, error.stack );
+					logError( "testing key %s caused error: %s", key, error.stack );
 
-					return false;
+					throw error;
 				} );
 		}
 
