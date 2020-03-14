@@ -193,7 +193,7 @@ module.exports = function() {
 		create( keyTemplate, data ) {
 			const that = this;
 
-			return this.client.lock( keyTemplate )
+			return this.client.lock( keyTemplate.replace( /%u.*$/, "" ) )
 				.do( () => new Promise( ( resolve, reject ) => {
 					attempt( 0, 100 );
 
