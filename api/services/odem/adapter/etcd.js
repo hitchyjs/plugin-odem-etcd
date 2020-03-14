@@ -144,6 +144,8 @@ module.exports = function() {
 
 							// TODO fetch previous revision of changed record from etcd to provide oldValue below
 
+							console.dir( res );
+
 							try {
 								value = JSON.parse( res.value );
 							} catch ( error ) {
