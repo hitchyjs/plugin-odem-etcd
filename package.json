@@ -26,15 +26,15 @@
 		"etcd3": "^0.2.13"
 	},
 	"peerDependencies": {
-		"hitchy": "^0.4.11",
-		"hitchy-plugin-odem": "^0.5.3"
+		"hitchy": "^0.5.2",
+		"hitchy-plugin-odem": "^0.5.4"
 	},
 	"devDependencies": {
 		"eslint": "^6.8.0",
 		"eslint-config-cepharum": "^1.0.11",
 		"eslint-plugin-promise": "^4.2.1",
 		"hitchy-server-dev-tools": "^0.1.6",
-		"mocha": "^7.0.1",
+		"mocha": "^7.1.0",
 		"should": "^13.2.3",
 		"should-http": "^0.1.1"
 	}
