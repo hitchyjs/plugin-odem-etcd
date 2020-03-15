@@ -144,13 +144,13 @@ module.exports = function() {
 
 							// TODO fetch previous revision of changed record from etcd to provide oldValue below
 
-							try {
-								value = JSON.parse( res.value );
-							} catch ( error ) {
-								logError( "got change notification with invalid data: %s", error.message );
-							}
-
 							const key = res.key.toString( "utf8" );
+
+							try {
+								value = JSON.parse( res.value.toString( "utf8" ) );
+							} catch ( error ) {
+								logError( "got change notification on %s with invalid data: %s", key, error.message );
+							}
 
 							logDebug( "got remote change notification on %s", key );
 
