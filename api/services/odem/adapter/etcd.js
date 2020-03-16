@@ -156,7 +156,8 @@ module.exports = function() {
 							try {
 								value = JSON.parse( raw );
 							} catch ( error ) {
-								logError( "got change notification on %s with invalid data: %s (%j)", key, error.message, raw );
+								logError( "ignoring change notification on %s with invalid data: %s (%j)", key, error.message, raw );
+								return;
 							}
 
 							logDebug( "got remote change notification on %s", key );
