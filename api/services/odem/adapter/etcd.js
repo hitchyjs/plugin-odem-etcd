@@ -140,24 +140,22 @@ module.exports = function() {
 							logDebug( "connected with cluster" );
 						} )
 						.on( "put", res => {
+							if ( res.value.length < 1 ) {
+								logDebug( "ignoring change notification on %s without data", key );
+								return;
+							}
+
 							let value;
 
 							// TODO fetch previous revision of changed record from etcd to provide oldValue below
 
 							const key = res.key.toString( "utf8" );
-
-							if ( !res.value ) {
-								logDebug( "ignoring change notification on %s without value", key );
-								return;
-							}
-
 							const raw = res.value.toString( "utf8" );
 
 							try {
 								value = JSON.parse( raw );
 							} catch ( error ) {
 								logError( "ignoring change notification on %s with invalid data: %s (%j)", key, error.message, raw );
-								console.dir( res );
 								return;
 							}
 
