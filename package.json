@@ -1,6 +1,6 @@
 {
 	"name": "hitchy-plugin-odem-etcd",
-	"version": "0.1.4-alpha.2",
+	"version": "0.1.4-alpha.3",
 	"description": "connecting Hitchy's ODM with etcd cluster",
 	"main": "index.js",
 	"scripts": {
