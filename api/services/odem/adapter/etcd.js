@@ -157,6 +157,7 @@ module.exports = function() {
 								value = JSON.parse( raw );
 							} catch ( error ) {
 								logError( "ignoring change notification on %s with invalid data: %s (%j)", key, error.message, raw );
+								console.dir( res );
 								return;
 							}
 
