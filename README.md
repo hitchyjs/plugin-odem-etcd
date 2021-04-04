@@ -1,3 +1,7 @@
+# [Hitchy](https://core.hitchy.org) has [moved its repositories](https://gitlab.com/hitchy) incl. [this one](https://gitlab.com/hitchy/plugin-odem-etcd).
+
+---
+
 # plugin-odem-etcd
 
 connecting [Hitchy](http://hitchyjs.org)'s [ODM](https://hitchyjs.github.io/plugin-odem/) with [etcd](https://etcd.io/) cluster
